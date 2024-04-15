@@ -2,8 +2,8 @@ using System;
 
 public abstract class LibraryData
 {
-        public Guid Id;
-        public DateTime CreatedDate;
+    public Guid Id;
+    public DateTime CreatedDate;
 
     public LibraryData(DateTime? createdDate = null)
     {

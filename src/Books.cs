@@ -3,7 +3,7 @@ public class Book : LibraryData
 {
     public string Title { get; }
 
-    public Book(string title,DateTime? createdDate = null) : base(createdDate)
+    public Book(string title, DateTime? createdDate = null) : base(createdDate)
     {
         Title = title;
     }
