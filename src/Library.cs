@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic; 
-using System.Linq; 
+using System.Collections.Generic;
+using System.Linq;
 
 public class Library
 {
@@ -23,17 +23,47 @@ public class Library
         users.Add(user);
     }
 
-    public Book? FindItemByName(string name)
+    public Book? FindBookByTitle(string name)
     {
-        Book? findItem = books.FirstOrDefault(book => book.Title.Equals(name, StringComparison.OrdinalIgnoreCase));
-        if (findItem == null)
+        Book? findBook = books.FirstOrDefault(book => book.Title.Equals(name, StringComparison.OrdinalIgnoreCase));
+        if (findBook == null)
         {
             throw new KeyNotFoundException($"Book '{name}' not found.");
         }
         else
         {
             Console.WriteLine($"Book found: '{name}'");
-            return findItem;
+            return findBook;
+        }
+    }
+    public User? FindUserByName(string name)
+    {
+        User? findUser = users.FirstOrDefault(user => user.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        if (findUser == null)
+        {
+            throw new KeyNotFoundException($"User '{name}' not found.");
+        }
+        else
+        {
+            Console.WriteLine($"User found: '{name}'");
+            return findUser;
+        }
+    }
+
+    public void DeleteBook(Guid Id)
+    {
+        Book? findBook = books.FirstOrDefault(book => book.Id == Id);
+        if (findBook == null)
+        {
+            throw new KeyNotFoundException($"there is no book with this ID");
+        }
+        else
+        {
+
+            Console.WriteLine($"Book was deleted successfully");
+            books.Remove(findBook);
+
+
         }
     }
 

@@ -12,8 +12,11 @@ internal class Print
         var library = new Library();
 
         library.AddBook(book1);
+        library.AddUser(user9);
+        Guid bookIdToDelete = book1.Id;
 
-        library.FindItemByName("The Great Gatsby");
+        library.FindBookByTitle("The Great Gatsby");
+        library.DeleteBook(bookIdToDelete);
     }
 
 }
