@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+
 public class Library
 {
     private List<Book> books;
@@ -66,5 +67,22 @@ public class Library
 
         }
     }
+    public void DeleteUser(Guid Id)
+    {
+        User? findUser = users.FirstOrDefault(user => user.Id == Id);
+        if (findUser == null)
+        {
+            throw new KeyNotFoundException($"there is no user with this ID");
+        }
+        else
+        {
+
+            Console.WriteLine($"user was deleted successfully");
+            users.Remove(findUser);
+
+
+        }
+    }
+
 
 }
