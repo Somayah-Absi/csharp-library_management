@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 
 public class Library
@@ -24,6 +25,15 @@ public class Library
         users.Add(user);
     }
 
+    public IEnumerable<Book> GetAllBooks(int page, int pageSize)
+    {
+        return books.OrderBy(book => book.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize);
+    }
+
+    public IEnumerable<User> GetAllUsers(int page, int pageSize)
+    {
+        return users.OrderBy(user => user.CreatedDate).Skip((page - 1) * pageSize).Take(pageSize);
+    }
     public Book? FindBookByTitle(string name)
     {
         Book? findBook = books.FirstOrDefault(book => book.Title.Equals(name, StringComparison.OrdinalIgnoreCase));
