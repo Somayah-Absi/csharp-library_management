@@ -36,57 +36,77 @@ internal class Print
         var book19 = new Book("The Iliad");
         var book20 = new Book("Anna Karenina");
 
-        var library = new Library();
-        //add books to library
+        var emailService = new EmailNotificationService();
+        var smsService = new SMSNotificationService();
+
+        var libraryWithEmail = new Library(emailService);
+        var libraryWithSMS = new Library(smsService);
+
+
+        // Demonstrate adding/removing books/users in each library and observe notifications
+
+
+
+        //add books to library with email notifications
         //-------------------------------------------------------------
-        library.AddBook(book1);
-        library.AddBook(book2);
-        library.AddBook(book3);
-        library.AddBook(book4);
-        library.AddBook(book5);
-        library.AddBook(book6);
-        library.AddBook(book7);
-        library.AddBook(book8);
-        library.AddBook(book9);
-        library.AddBook(book10);
-        library.AddBook(book11);
-        library.AddBook(book12);
-        library.AddBook(book13);
-        library.AddBook(book14);
-        library.AddBook(book15);
-        library.AddBook(book16);
-        library.AddBook(book17);
-        library.AddBook(book18);
-        library.AddBook(book19);
-        library.AddBook(book20);
-        //add users to library
+        libraryWithEmail.AddBook(book1);
+        libraryWithEmail.AddBook(book2);
+        libraryWithEmail.AddBook(book3);
+        libraryWithEmail.AddBook(book4);
+        libraryWithEmail.AddBook(book5);
+        libraryWithEmail.AddBook(book6);
+        libraryWithEmail.AddBook(book7);
+        libraryWithEmail.AddBook(book8);
+        libraryWithEmail.AddBook(book9);
+        libraryWithEmail.AddBook(book10);
+
+        //add Users to library with email notifications
+        //-------------------------------------------------------------
+
+        libraryWithEmail.AddUser(user6);
+        libraryWithEmail.AddUser(user7);
+        libraryWithEmail.AddUser(user8);
+        libraryWithEmail.AddUser(user9);
+        libraryWithEmail.AddUser(user10);
+
+        //add books to library with SMS notifications
+        //-------------------------------------------------------------
+        libraryWithSMS.AddBook(book11);
+        libraryWithSMS.AddBook(book12);
+        libraryWithSMS.AddBook(book13);
+        libraryWithSMS.AddBook(book14);
+        libraryWithSMS.AddBook(book15);
+        libraryWithSMS.AddBook(book16);
+        libraryWithSMS.AddBook(book17);
+        libraryWithSMS.AddBook(book18);
+        libraryWithSMS.AddBook(book19);
+        libraryWithSMS.AddBook(book20);
+        //add users to library with SMS notifications
         //--------------------------------------------------------------
 
-        library.AddUser(user1);
-        library.AddUser(user2);
-        library.AddUser(user3);
-        library.AddUser(user4);
-        library.AddUser(user5);
-        library.AddUser(user6);
-        library.AddUser(user7);
-        library.AddUser(user8);
-        library.AddUser(user9);
-        library.AddUser(user10);
-
-        //test find user  and book methods
-        library.FindUserByName("Ian");
-        library.FindUserByName("Hannah");
-        library.FindBookByTitle("The Great Gatsby");
+        libraryWithSMS.AddUser(user1);
+        libraryWithSMS.AddUser(user2);
+        libraryWithSMS.AddUser(user3);
+        libraryWithSMS.AddUser(user4);
+        libraryWithSMS.AddUser(user5);
 
         //test delete book and user by ID
         Guid bookIdToDelete = book1.Id;
         Guid userIdToDelete = user9.Id;
+        Console.WriteLine("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+        libraryWithEmail.DeleteBook(bookIdToDelete);
+        libraryWithEmail.DeleteUser(userIdToDelete);
 
-        library.DeleteBook(bookIdToDelete);
-        library.DeleteUser(userIdToDelete);
+
+        //    test find user  and book methods
+        Console.WriteLine("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+        libraryWithEmail.FindUserByName("Ian");
+        libraryWithEmail.FindUserByName("Hannah");
+        libraryWithEmail.FindBookByTitle("The Great Gatsby");
+
 
         //test getAllBooks method
-        var allBook = library.GetAllBooks(1, 5);
+        var allBook = libraryWithSMS.GetAllBooks(1, 5);
         foreach (var all in allBook)
         {
             Console.WriteLine("________________________________________________________");
@@ -94,8 +114,10 @@ internal class Print
 
         }
         Console.WriteLine("\n \n***************************************************************************************************");
+
+
         //test getAllUsers method
-        var allUsers = library.GetAllUsers(1, 5);
+        var allUsers = libraryWithSMS.GetAllUsers(1, 5);
         foreach (var all in allUsers)
         {
             Console.WriteLine("_________________________________________________________");

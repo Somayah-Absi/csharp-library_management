@@ -6,23 +6,38 @@ using System.Security.Cryptography.X509Certificates;
 
 public class Library
 {
+    private INotificationService notificationService;
     private List<Book> books;
     private List<User> users;
-
-    public Library()
+   
+    public Library(INotificationService service)
     {
+        notificationService = service;
         books = new List<Book>();
         users = new List<User>();
     }
 
     public void AddBook(Book book)
     {
-        books.Add(book);
+        try
+        {
+            books.Add(book);
+            notificationService.SendNotificationOnSuccess(" add book ", book.Title);
+        }
+        catch (Exception ex) { notificationService.SendNotificationOnFailure(" Add Book", book.Title, ex.Message); }
     }
 
     public void AddUser(User user)
     {
-        users.Add(user);
+        try
+        {
+            users.Add(user);
+            notificationService.SendNotificationOnSuccess("Adding User ",user.Name);
+        }
+        catch (Exception ex)
+        {
+            notificationService.SendNotificationOnFailure("Adding User ", user.Name, ex.Message);
+        }
     }
 
     public IEnumerable<Book> GetAllBooks(int page, int pageSize)
@@ -39,7 +54,8 @@ public class Library
         Book? findBook = books.FirstOrDefault(book => book.Title.Equals(name, StringComparison.OrdinalIgnoreCase));
         if (findBook == null)
         {
-            throw new KeyNotFoundException($"Book '{name}' not found.");
+           Console.WriteLine($"book '{name}' not found.");
+        return null; 
         }
         else
         {
@@ -52,7 +68,8 @@ public class Library
         User? findUser = users.FirstOrDefault(user => user.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         if (findUser == null)
         {
-            throw new KeyNotFoundException($"User '{name}' not found.");
+             Console.WriteLine($"User '{name}' not found.");
+        return null; 
         }
         else
         {
@@ -66,13 +83,15 @@ public class Library
         Book? findBook = books.FirstOrDefault(book => book.Id == Id);
         if (findBook == null)
         {
-            throw new KeyNotFoundException($"there is no book with this ID");
+            Console.WriteLine("                                                there is no book with this ID");
+            notificationService.SendNotificationOnFailure("Deleting Book :",Id.ToString(),"not found");
         }
         else
         {
 
-            Console.WriteLine($"Book was deleted successfully");
-            books.Remove(findBook);
+            Console.WriteLine("                                                 Book was deleted successfully");
+            books.Remove(findBook); 
+            notificationService.SendNotificationOnSuccess("Deleting Book :",findBook.Title);
 
 
         }
@@ -82,13 +101,15 @@ public class Library
         User? findUser = users.FirstOrDefault(user => user.Id == Id);
         if (findUser == null)
         {
-            throw new KeyNotFoundException($"there is no user with this ID");
+            Console.WriteLine("                                                  there is no user with this ID");
+            notificationService.SendNotificationOnFailure("Deleting User :",Id.ToString(),"not found");
         }
         else
         {
 
-            Console.WriteLine($"user was deleted successfully");
+            Console.WriteLine("                                                   user was deleted successfully");
             users.Remove(findUser);
+            notificationService.SendNotificationOnSuccess("Deleting User : ",findUser.Name);
 
 
         }
