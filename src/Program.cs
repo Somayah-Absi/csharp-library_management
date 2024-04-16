@@ -91,11 +91,11 @@ internal class Print
         libraryWithSMS.AddUser(user5);
 
         //test delete book and user by ID
-        Guid bookIdToDelete = book1.Id;
-        Guid userIdToDelete = user9.Id;
+       
+     
         Console.WriteLine("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-        libraryWithEmail.DeleteBook(bookIdToDelete);
-        libraryWithEmail.DeleteUser(userIdToDelete);
+        libraryWithEmail.DeleteBook( book1.Id);
+        libraryWithEmail.DeleteUser(user9.Id);
 
 
         //    test find user  and book methods
