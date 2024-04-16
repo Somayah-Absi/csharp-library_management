@@ -84,7 +84,8 @@ internal class Print
 
         library.DeleteBook(bookIdToDelete);
         library.DeleteUser(userIdToDelete);
-        //
+
+        //test getAllBooks method
         var allBook = library.GetAllBooks(1, 5);
         foreach (var all in allBook)
         {
@@ -92,7 +93,16 @@ internal class Print
             Console.WriteLine($"Title: {all.Title} \n \n  Created Date: {all.CreatedDate}");
 
         }
+        Console.WriteLine("\n \n***************************************************************************************************");
+        //test getAllUsers method
+        var allUsers = library.GetAllUsers(1, 5);
+        foreach (var all in allUsers)
+        {
+            Console.WriteLine("_________________________________________________________");
+            Console.WriteLine("---------------------------------------------------------");
+            Console.WriteLine($"Title: {all.Name} || Created Date: {all.CreatedDate}");
 
+        }
 
     }
 
