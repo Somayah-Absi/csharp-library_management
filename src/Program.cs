@@ -67,6 +67,7 @@ internal class Print
         libraryWithEmail.AddUser(user7);
         libraryWithEmail.AddUser(user8);
         libraryWithEmail.AddUser(user9);
+        libraryWithEmail.AddUser(user9);
         libraryWithEmail.AddUser(user10);
 
         //add books to library with SMS notifications
@@ -85,16 +86,17 @@ internal class Print
         //--------------------------------------------------------------
 
         libraryWithSMS.AddUser(user1);
+        libraryWithSMS.AddUser(user1);
         libraryWithSMS.AddUser(user2);
         libraryWithSMS.AddUser(user3);
         libraryWithSMS.AddUser(user4);
         libraryWithSMS.AddUser(user5);
 
         //test delete book and user by ID
-       
-     
+
+
         Console.WriteLine("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-        libraryWithEmail.DeleteBook( book1.Id);
+        libraryWithEmail.DeleteBook(book1.Id);
         libraryWithEmail.DeleteUser(user9.Id);
 
 
@@ -106,7 +108,7 @@ internal class Print
 
 
         //test getAllBooks method
-        var allBook = libraryWithSMS.GetAllBooks(1, 5);
+        var allBook = libraryWithSMS.GetAllBooks(2, 5);
         foreach (var all in allBook)
         {
             Console.WriteLine("________________________________________________________");

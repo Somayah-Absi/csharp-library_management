@@ -9,7 +9,7 @@ public class Library
     private INotificationService notificationService;
     private List<Book> books;
     private List<User> users;
-   
+
     public Library(INotificationService service)
     {
         notificationService = service;
@@ -21,8 +21,17 @@ public class Library
     {
         try
         {
-            books.Add(book);
-            notificationService.SendNotificationOnSuccess(" add book ", book.Title);
+            Book? findBook = books.Find(AddingBook => AddingBook.Id == book.Id);
+            if (findBook != null)
+            {
+                notificationService.SendNotificationOnFailure("adding book Already here", findBook.Title, "Already here");
+            }
+            else
+            {
+                books.Add(book);
+                notificationService.SendNotificationOnSuccess(" add book ", book.Title);
+            }
+
         }
         catch (Exception ex) { notificationService.SendNotificationOnFailure(" Add Book", book.Title, ex.Message); }
     }
@@ -31,12 +40,22 @@ public class Library
     {
         try
         {
-            users.Add(user);
-            notificationService.SendNotificationOnSuccess("Adding User ",user.Name);
+            User? findUser = users.Find(use => use.Id == user.Id);
+            if (findUser != null)
+            {
+
+                notificationService.SendNotificationOnFailure("adding user already here", user.Name, "Already here");
+            }
+            else
+            {
+                users.Add(user);
+                notificationService.SendNotificationOnSuccess("Add User ", user.Name);
+            }
+
         }
         catch (Exception ex)
         {
-            notificationService.SendNotificationOnFailure("Adding User ", user.Name, ex.Message);
+            notificationService.SendNotificationOnFailure("Add User ", user.Name, ex.Message);
         }
     }
 
@@ -54,8 +73,8 @@ public class Library
         Book? findBook = books.FirstOrDefault(book => book.Title.Equals(name, StringComparison.OrdinalIgnoreCase));
         if (findBook == null)
         {
-           Console.WriteLine($"book '{name}' not found.");
-        return null; 
+            Console.WriteLine($"book '{name}' not found.");
+            return null;
         }
         else
         {
@@ -68,8 +87,8 @@ public class Library
         User? findUser = users.FirstOrDefault(user => user.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         if (findUser == null)
         {
-             Console.WriteLine($"User '{name}' not found.");
-        return null; 
+            Console.WriteLine($"User '{name}' not found.");
+            return null;
         }
         else
         {
@@ -84,14 +103,14 @@ public class Library
         if (findBook == null)
         {
             Console.WriteLine("                                                there is no book with this ID");
-            notificationService.SendNotificationOnFailure("Deleting Book :",Id.ToString(),"not found");
+            notificationService.SendNotificationOnFailure("Deleting Book :", Id.ToString(), "not found");
         }
         else
         {
 
             Console.WriteLine("                                                 Book was deleted successfully");
-            books.Remove(findBook); 
-            notificationService.SendNotificationOnSuccess("Deleting Book :",findBook.Title);
+            books.Remove(findBook);
+            notificationService.SendNotificationOnSuccess("Deleting Book :", findBook.Title);
 
 
         }
@@ -102,14 +121,14 @@ public class Library
         if (findUser == null)
         {
             Console.WriteLine("                                                  there is no user with this ID");
-            notificationService.SendNotificationOnFailure("Deleting User :",Id.ToString(),"not found");
+            notificationService.SendNotificationOnFailure("Deleting User :", Id.ToString(), "not found");
         }
         else
         {
 
             Console.WriteLine("                                                   user was deleted successfully");
             users.Remove(findUser);
-            notificationService.SendNotificationOnSuccess("Deleting User : ",findUser.Name);
+            notificationService.SendNotificationOnSuccess("Deleting User : ", findUser.Name);
 
 
         }
